@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href=".\styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOP Tic Tac Toe</title>
+</head>
+
+<body>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content noselect">
+            <span class="close" id="closeModal">&times;</span>
+            <p>The winner is... <span id="winnerName">Nobody</span>!</p>
+            <button class="button" onclick="resetGame()">Play Again</button>
+        </div>
+    </div>
+    <div id="gameBoard" class="centered">
+        <h1>Tic Tac Toe</h1>
+        <div id="scoreBoard">
+            <div id="player1" class="flexLeft player">Player 1</div>
+            <div id="player2" class="player">Player 2</div>
+        </div>
+    </div>
+    <script src=".\scripts.js"></script>
+</body>
