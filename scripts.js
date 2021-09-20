@@ -55,16 +55,6 @@ const updateActivePlayer = () => {
 	}
 };
 
-const addClickHandler = (elem) => {
-	elem.addEventListener("click", () => {
-	  if (elem.innerText == "" && !gameOver) {
-		elem.innerText = activePlayer.marker;
-		gameBoard.gameArr[elem.id] = activePlayer.marker;
-		gameHandler();
-	  }
-	});
-};
-
 const resetGame = () => {
 	gameOver = false;
 	modal.style.display = "none";
@@ -145,14 +135,27 @@ const checkWin = () => {
 		updateScores();
 		console.log(winArr);
 	});
-}
+};
+
+const addClickHandler = (elem) => {
+	elem.addEventListener("click", () => {
+	  if (elem.innerText == "" && !gameOver) {
+		elem.innerText = activePlayer.marker;
+		gameBoard.gameArr[elem.id] = activePlayer.marker;
+		gameHandler();
+	  }
+	});
+};
 
 const gameHandler = () => {
 	winnerName.innerText = "Game in progress...";
 	checkWin();
-	updateActivePlayer();
-	if (!gameOver && useAI) {
-		aiPlayer();
+	
+	if (!gameOver) {
+		updateActivePlayer();
+		if (useAI && activePlayer == player2) {
+			aiPlayer();
+		}
 	}
 };
 
@@ -171,16 +174,12 @@ const aiPlayer = () => {
 	
 	if (difficulty == "Easy") {
 		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-		cells[targetCell].innerText = activePlayer.marker;
-		gameBoard.gameArr[targetCell] = activePlayer.marker;
+		cells[targetCell].click();
 	}
 
 	if (difficulty == "Impossible") {
 		console.log("I don't know what to do here");
 	}
-
-	updateActivePlayer();
-	
 };
 
 const winnerName = document.getElementById("winnerName");
@@ -195,13 +194,23 @@ modals.forEach((element) => {
 
 let activePlayer;
 let gameOver = false;
-const useAI = false;
+const aiCheckbox = document.getElementById("aiCheckbox");
+aiCheckbox.addEventListener("click", () => {
+	useAI = !useAI;
+	if (!useAI) {
+		player2.name = "Player 2";
+	}
+	updateScores();
+})
+let useAI = aiCheckbox.checked;
 
 const player1 = player("Player 1", "X", 0);
 const player2 = player("Player 2", "O", 1);
 
 const player1Card = document.getElementById("player1");
 const player2Card = document.getElementById("player2");
+
+// Name change
 const player1NameChange = document.getElementById("player1NameSelect");
 player1NameChange.addEventListener("click", () => {
 	let newName = window.prompt("Enter your name:");
