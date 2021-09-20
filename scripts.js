@@ -46,18 +46,25 @@ const updateScores = () => {
 	const player2Score = document.getElementById("player2Score");
 	player2Label.innerText = player2.name;
 	player2Score.innerText = player2.score;
+
+	
+	
 };
 
 const updateActivePlayer = () => {
+	const turnLabel = document.getElementById("activeMarker");
 	if (activePlayer == player1) {
 		activePlayer = player2;
 		player2Card.style.border = "5px solid red";
+		turnLabel.innerText = activePlayer.marker;
 		player1Card.style.border = "1px solid black";
 	} else {
 		activePlayer = player1;
 		player1Card.style.border = "5px solid red";
 		player2Card.style.border = "1px solid black";
+		turnLabel.innerText = activePlayer.marker;
 	}
+	
 };
 
 const resetGame = () => {
@@ -83,7 +90,7 @@ const drawResetButton = (parentElement, text) => {
 const drawBoard = (elemID) => {
 	const gameElem = document.getElementById(elemID);
 	const table = document.createElement("table");
-	table.classList.add("centered", "noselect");
+	table.classList.add("centered", "noselect", "shadow");
 	drawResetButton(gameElem, "Reset");
 	gameElem.appendChild(table);
 
@@ -250,15 +257,18 @@ modal.addEventListener("click", (event) => {
 let activePlayer;
 let gameOver = false;
 const aiCheckbox = document.getElementById("aiCheckbox");
+const computerStat = document.getElementById("computerStat");
 let useAI = aiCheckbox.checked;
 aiCheckbox.addEventListener("click", () => {
 	useAI = !useAI;
 	if (!useAI) {
 		player2.name = "Player 2";
+		computerStat.innerText = "Human vs Human";
 	}
 	if (useAI) {
 		player2.name = "Mr Robot";
-		aiPlayer();
+		checkAIFirstMove();
+		computerStat.innerText = "Human vs Machine!";
 	}
 	updateScores();
 });
@@ -290,8 +300,10 @@ player2NameChange.addEventListener("click", () => {
 
 window.onload = () => {
 	activePlayer = player2;
+	computerStat.innerText = "Human vs Human";
 	if (useAI) {
 		activePlayer.name = "Mr Robot";
+		computerStat.innerText = "Human vs Machine!";
 	}
 	resetGame();
 	updateActivePlayer();

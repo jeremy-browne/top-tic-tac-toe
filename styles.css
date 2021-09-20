@@ -2,12 +2,20 @@
     --cellHeight: 10vw;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient( 109.6deg,  rgba(62,161,219,1) 11.2%, rgba(93,52,236,1) 100.2% );
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
 table, tr, td {
-    border: 1px solid black;
+    border: 1px solid white;
     border-collapse: collapse;
     font-weight: 700;
     font-size: 8vw;
@@ -15,6 +23,8 @@ table, tr, td {
     height: var(--cellHeight);
     width: var(--cellHeight);
     cursor: pointer;
+    background-color: black;
+    color: white;
 }
 
 #gameBoard {
@@ -26,6 +36,17 @@ table, tr, td {
     z-index: 0;
 }
 
+#infoPanel {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#computerMode {
+    font-size: 20px;
+}
+
 .player {
     border: 1px solid black;
     flex: 1;
@@ -33,6 +54,9 @@ table, tr, td {
     margin: 10px 10px;
     box-sizing: border-box;
     z-index: 200;
+    border-radius: 20px;
+    margin: 10px 80px;
+    background-color: rgba(255, 255, 255, 0.35);
 }
 
 .centered {
@@ -43,11 +67,13 @@ table, tr, td {
     font-size: 20px;
     margin-bottom: 10px;
     box-sizing: border-box;
-    border-style: 1px solid black;
-    border-radius: 10px;
+    border-style: none;
+    border-radius: 5px;
     padding-left: 20px;
     padding-right: 20px;
     cursor: pointer;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: lightblue;
 }
 
 .btnSmall {
@@ -116,6 +142,10 @@ table, tr, td {
 
 .smallText {
     font-size: 25px;
+}
+
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 @-webkit-keyframes fadeIn {
