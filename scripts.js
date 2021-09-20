@@ -26,7 +26,7 @@ const checkAIFirstMove = () => {
 	if (!gameOver && useAI && activePlayer == player2) {
 		aiPlayer();
 	}
-}
+};
 
 const closeModals = () => {
 	modal.style.display = "none";
@@ -138,9 +138,10 @@ const checkWin = () => {
 		gameOver = true;
 		winnerName.innerText = "Nobody wins!";
 		modal.style.display = "block";
-		updateScores();
-		return;
 	}
+
+	updateScores();
+	return;
 };
 
 const addClickHandler = (elem) => {
@@ -209,7 +210,7 @@ aiCheckbox.addEventListener("click", () => {
 		aiPlayer();
 	}
 	updateScores();
-})
+});
 
 
 const player1 = player("Player 1", "X", 0);
@@ -234,7 +235,7 @@ player2NameChange.addEventListener("click", () => {
 		player2.name = newName;
 	}
 	updateScores();
-})
+});
 
 window.onload = () => {
 	activePlayer = player2;
