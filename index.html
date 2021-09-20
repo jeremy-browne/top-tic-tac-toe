@@ -12,20 +12,26 @@
 <body>
     <div class="modal" id="modal">
         <div class="modal-content" id="modalContent">
-            <span class="close" id="closeModal">&times;</span>
+            <span class="close closeModal">&times;</span>
             <p><span id="winnerName"></span></p>
         </div>
     </div>
     <div id="gameBoard" class="centered">
         <h1>Tic Tac Toe</h1>
-        <div id="scoreBoard">
-            <div id="player1" class="flexLeft player">
-                <p id="player1Name" class="playerName"></p>
-                <p>Score: <span id="player1Score"></span></p>
+        <div id="scoreBoard" class="noselect">
+            <div id="player1" class="player">
+                <div>
+                    <p>Name: <span id="player1Name"></span> (X)</p>
+                    <p>Score: <span id="player1Score"></span></p>
+                    <button id="player1NameSelect" class="button btnSmall">Change Name</button>
+                </div>
             </div>
             <div id="player2" class="player">
-                <p id="player2Name" class="playerName"></p>
-                <p>Score: <span id="player2Score"></span></p>
+                <div>
+                    <p>Name: <span id="player2Name"></span> (O)</p>
+                    <p>Score: <span id="player2Score"></span></p>
+                    <button id="player2NameSelect" class="button btnSmall">Change Name</button>
+                </div>
             </div>
         </div>
     </div>

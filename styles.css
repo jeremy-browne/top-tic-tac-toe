@@ -1,5 +1,5 @@
 :root {
-    --cellHeight: 12vw;
+    --cellHeight: 10vw;
 }
 
 body {
@@ -10,15 +10,11 @@ table, tr, td {
     border: 1px solid black;
     border-collapse: collapse;
     font-weight: 700;
-    font-size: 10vw;
-}
-
-tr {
+    font-size: 8vw;
+    table-layout: fixed;
     height: var(--cellHeight);
-}
-
-td {
     width: var(--cellHeight);
+    cursor: pointer;
 }
 
 #gameBoard {
@@ -27,14 +23,16 @@ td {
 
 #scoreBoard {
     display: flex;
+    z-index: 0;
 }
 
 .player {
     border: 1px solid black;
     flex: 1;
     cursor: pointer;
-    margin: 30px 60px;
+    margin: 10px 10px;
     box-sizing: border-box;
+    z-index: 200;
 }
 
 .centered {
@@ -42,8 +40,8 @@ td {
 }
 
 .button {
-    font-size: 30px;
-    margin-bottom: 20px;
+    font-size: 20px;
+    margin-bottom: 10px;
     box-sizing: border-box;
     border-style: 1px solid black;
     border-radius: 10px;
@@ -69,7 +67,7 @@ td {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 500;
     left: 0;
     top: 0;
     width: 100%;
@@ -97,6 +95,7 @@ td {
     animation-name: fadeIn;
     animation-duration: 0.5s;
     position: fixed;
+    z-index: 999;
 }
 
 /* The Close Button */
