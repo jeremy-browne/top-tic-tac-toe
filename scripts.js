@@ -176,25 +176,67 @@ const getEmpty = (cells) => {
 	}
 
 	return emptyCells;
+};
+
+const max = (a, b) => {
+	if (a > b) {
+		return a;
+	}
+	return b;
 }
 
-const miniMax = (emptyCells) => {
-	console.log(emptyCells);
-	return i;
+const min = (a, b) => {
+	if (a < b) {
+		return a;
+	}
+	return b;
+}
+
+const miniMax = (state, depth, maximizingPlayer) => {
+	console.log(depth, maximizingPlayer);
+	if (depth == 0) {
+		return state[0];
+	}
+	if (maximizingPlayer) {
+		let maxEval = -Infinity;
+		for (let i = 0; i < state.length; i++) {
+			let eval = miniMax(state, depth - 1, false);
+			maxEval = max(maxEval, eval);
+			if (state.length > 1) {
+				state.splice(i, 1);
+			}
+			console.log(maxEval);
+			return maxEval;
+		}	
+	} else {
+		let minEval = Infinity;
+		for (let i = 0; i < state.length; i++) {
+			let eval = miniMax(state, depth - 1, true);
+			minEval = min(minEval, eval);
+			if (state.length > 1) {
+				state.splice(i, 1);
+			}
+			console.log(minEval);
+			return minEval;
+		}	
+	}
 };
 
 const aiPlayer = () => {
-	const difficulty = "Easy";
+	const difficulty = "Impossible";
 	let cells = Array.from(document.getElementsByTagName("td"));
 	let emptyCells = getEmpty(cells);
+	let targetCell;
 	
 	if (difficulty == "Easy") {
-		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+		targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 		cells[targetCell].click();
 	}
 
 	if (difficulty == "Impossible") {
-		console.log("I don't know what to do here");
+		targetCell = miniMax(emptyCells, 9, true);
+		console.log(targetCell);
+		cells[targetCell].click();
 	}
 };
 
