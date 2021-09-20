@@ -43,40 +43,6 @@ const updateScores = () => {
 	player2Score.innerText = player2.score;
 };
 
-const checkWin = () => {
-	// Check for win
-	gameBoard.winningCombos.forEach((combo) => {
-		let winArr = [];
-		for (let i = 0; i < combo.length; i++) {
-			winArr.push(gameBoard.gameArr[combo[i]]);
-		}
-
-		if (!winArr.includes(undefined) && winArr.every((item) => item == winArr[0])) {
-			gameOver = true;
-			winnerName.innerText = activePlayer.name + " wins!";
-			activePlayer.score += 1;
-			modal.style.display = "block";
-			updateScores();
-		}
-
-		// Draw condition
-		if (!winArr.includes(undefined) && !winArr.every((item) => item == winArr[0]) && !gameBoard.gameArr.includes(undefined)) {
-			gameOver = true;
-			winnerName.innerText = "Nobody wins!";
-			modal.style.display = "block";
-		}
-	});
-}
-
-const gameHandler = () => {
-	winnerName.innerText = "Game in progress...";
-	checkWin();
-	updateActivePlayer();
-	if (useAI) {
-		aiPlayer();
-	}
-};
-
 const updateActivePlayer = () => {
 	if (activePlayer == player1) {
 		activePlayer = player2;
@@ -90,13 +56,13 @@ const updateActivePlayer = () => {
 };
 
 const addClickHandler = (elem) => {
-  elem.addEventListener("click", () => {
-    if (elem.innerText == "" && !gameOver) {
-      elem.innerText = activePlayer.marker;
-      gameBoard.gameArr[elem.id] = activePlayer.marker;
-      gameHandler();
-    }
-  });
+	elem.addEventListener("click", () => {
+	  if (elem.innerText == "" && !gameOver) {
+		elem.innerText = activePlayer.marker;
+		gameBoard.gameArr[elem.id] = activePlayer.marker;
+		gameHandler();
+	  }
+	});
 };
 
 const resetGame = () => {
@@ -153,25 +119,41 @@ const drawBoard = (elemID) => {
 	});
 };
 
-const minMaxMax = () => {
-	let moveScore = Number.NEGATIVE_INFINITY;
-	let move = null;
-
-	for (let i = 0; i < 3; i++) {
-		for (let j = 0; j < j; j++) {
-			if (boardStates[i][j] == "") {
-				
-			}
-			
+const checkWin = () => {
+	// Check for win
+	gameBoard.winningCombos.forEach((combo) => {
+		let winArr = [];
+		for (let i = 0; i < combo.length; i++) {
+			winArr.push(gameBoard.gameArr[combo[i]]);
 		}
-		
+
+		if (!winArr.includes(undefined) && winArr.every((item) => item == winArr[0])) {
+			gameOver = true;
+			winnerName.innerText = activePlayer.name + " wins!";
+			activePlayer.score += 1;
+			modal.style.display = "block";
+			updateScores();
+		}
+
+		// Draw condition
+		if (!winArr.includes(undefined) && !winArr.every((item) => item == winArr[0]) && !gameBoard.gameArr.includes(undefined)) {
+			gameOver = true;
+			winnerName.innerText = "Nobody wins!";
+			modal.style.display = "block";
+		}
+
+		console.log(winArr);
+	});
+}
+
+const gameHandler = () => {
+	winnerName.innerText = "Game in progress...";
+	checkWin();
+	updateActivePlayer();
+	if (useAI) {
+		aiPlayer();
 	}
-
-}
-
-const minMaxMin = () => {
-
-}
+};
 
 const aiPlayer = () => {
 	const difficulty = "Easy";
@@ -179,14 +161,14 @@ const aiPlayer = () => {
 	// TO DO: Highlight AI decision process
 	let cells = Array.from(document.getElementsByTagName("td"));
 	let emptyCells = [];
+	for (let i = 0; i < cells.length; i++) {
+		if (cells[i].innerText == "") {
+			emptyCells.push(i);
+		}
+	}
+	console.log(emptyCells);
 	
 	if (difficulty == "Easy") {
-		for (let i = 0; i < cells.length; i++) {
-			if (cells[i].innerText == "") {
-				emptyCells.push(i);
-			}
-		}
-		console.log(emptyCells);
 		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 		cells[targetCell].innerText = activePlayer.marker;
 		gameBoard.gameArr[targetCell] = activePlayer.marker;
