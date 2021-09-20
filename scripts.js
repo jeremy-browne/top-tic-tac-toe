@@ -132,7 +132,7 @@ const checkWin = () => {
 			winnerName.innerText = activePlayer.name + " wins!";
 			activePlayer.score += 1;
 			modal.style.display = "block";
-			updateScores();
+			
 		}
 
 		// Draw condition
@@ -142,6 +142,7 @@ const checkWin = () => {
 			modal.style.display = "block";
 		}
 
+		updateScores();
 		console.log(winArr);
 	});
 }
@@ -150,7 +151,7 @@ const gameHandler = () => {
 	winnerName.innerText = "Game in progress...";
 	checkWin();
 	updateActivePlayer();
-	if (useAI) {
+	if (!gameOver && useAI) {
 		aiPlayer();
 	}
 };
@@ -194,7 +195,7 @@ modals.forEach((element) => {
 
 let activePlayer;
 let gameOver = false;
-const useAI = true;
+const useAI = false;
 
 const player1 = player("Player 1", "X", 0);
 const player2 = player("Player 2", "O", 1);
