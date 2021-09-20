@@ -22,6 +22,15 @@ const player = (name, marker, id) => {
 	return { name, score, marker, id };
 };
 
+const closeModals = () => {
+	modals.forEach((element) => {
+		element.style.display = "none";
+	});
+	if (gameOver) {
+		resetGame();
+	}
+};
+
 const updateScores = () => {
 	const player1Label = document.getElementById("player1Name");
 	const player1Score = document.getElementById("player1Score");
@@ -186,19 +195,9 @@ const aiPlayer = () => {
 	if (difficulty == "Impossible") {
 		console.log("I don't know what to do here");
 	}
-	
-	checkWin();
+
 	updateActivePlayer();
 	
-};
-
-const closeModals = () => {
-	modals.forEach((element) => {
-		element.style.display = "none";
-	});
-	if (gameOver) {
-		resetGame();
-	}
 };
 
 const winnerName = document.getElementById("winnerName");
