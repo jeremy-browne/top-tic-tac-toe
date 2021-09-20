@@ -34,8 +34,7 @@ const updateScores = () => {
 	player2Score.innerText = player2.score;
 };
 
-const gameHandler = () => {
-	winnerName.innerText = "Game in progress...";
+const checkWin = () => {
 	// Check for win
 	gameBoard.winningCombos.forEach((combo) => {
 		let winArr = [];
@@ -51,18 +50,21 @@ const gameHandler = () => {
 			updateScores();
 		}
 
+		// Draw condition
 		if (!winArr.includes(undefined) && !winArr.every((item) => item == winArr[0]) && !gameBoard.gameArr.includes(undefined)) {
 			gameOver = true;
 			winnerName.innerText = "Nobody wins!";
 			modal.style.display = "block";
 		}
 	});
+}
 
+const gameHandler = () => {
+	winnerName.innerText = "Game in progress...";
+	checkWin();
 	updateActivePlayer();
-
 	if (useAI) {
 		aiPlayer();
-		updateActivePlayer();
 	}
 };
 
@@ -143,11 +145,23 @@ const drawBoard = (elemID) => {
 };
 
 const minMaxMax = () => {
+	let moveScore = Number.NEGATIVE_INFINITY;
+	let move = null;
+
+	for (let i = 0; i < 3; i++) {
+		for (let j = 0; j < j; j++) {
+			if (boardStates[i][j] == "") {
+				
+			}
+			
+		}
+		
+	}
 
 }
 
 const minMaxMin = () => {
-	
+
 }
 
 const aiPlayer = () => {
@@ -158,8 +172,6 @@ const aiPlayer = () => {
 	let emptyCells = [];
 	
 	if (difficulty == "Easy") {
-		
-		
 		for (let i = 0; i < cells.length; i++) {
 			if (cells[i].innerText == "") {
 				emptyCells.push(i);
@@ -168,11 +180,16 @@ const aiPlayer = () => {
 		console.log(emptyCells);
 		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 		cells[targetCell].innerText = activePlayer.marker;
+		gameBoard.gameArr[targetCell] = activePlayer.marker;
 	}
 
 	if (difficulty == "Impossible") {
 		console.log("I don't know what to do here");
 	}
+	
+	checkWin();
+	updateActivePlayer();
+	
 };
 
 const closeModals = () => {
