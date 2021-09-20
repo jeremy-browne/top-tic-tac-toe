@@ -22,12 +22,17 @@ const player = (name, marker, id) => {
 	return { name, score, marker, id };
 };
 
+const checkAIFirstMove = () => {
+	if (!gameOver && useAI && activePlayer == player2) {
+		aiPlayer();
+	}
+}
+
 const closeModals = () => {
-	modals.forEach((element) => {
-		element.style.display = "none";
-	});
+	modal.style.display = "none";
 	if (gameOver) {
 		resetGame();
+		checkAIFirstMove();
 	}
 };
 
@@ -57,7 +62,7 @@ const updateActivePlayer = () => {
 
 const resetGame = () => {
 	gameOver = false;
-	modal.style.display = "none";
+	closeModals();
 	const cells = Array.from(document.getElementsByTagName("td"));
 	cells.forEach((element) => {
 		element.innerText = "";
@@ -111,39 +116,40 @@ const drawBoard = (elemID) => {
 
 const checkWin = () => {
 	// Check for win
-	gameBoard.winningCombos.forEach((combo) => {
+	for (let i = 0; i < gameBoard.winningCombos.length; i++) {
+		let combo = gameBoard.winningCombos[i];
 		let winArr = [];
-		for (let i = 0; i < combo.length; i++) {
-			winArr.push(gameBoard.gameArr[combo[i]]);
+		for (let j = 0; j < combo.length; j++) {
+			winArr.push(gameBoard.gameArr[combo[j]])
 		}
-
 		if (!winArr.includes(undefined) && winArr.every((item) => item == winArr[0])) {
+			console.log(winArr);
 			gameOver = true;
 			winnerName.innerText = activePlayer.name + " wins!";
 			activePlayer.score += 1;
 			modal.style.display = "block";
-			
+			updateScores();
+			return;
 		}
+	}
 
-		// Draw condition
-		if (!winArr.includes(undefined) && !winArr.every((item) => item == winArr[0]) && !gameBoard.gameArr.includes(undefined)) {
-			gameOver = true;
-			winnerName.innerText = "Nobody wins!";
-			modal.style.display = "block";
-		}
-
+	// Draw condition
+	if (!gameBoard.gameArr.includes(undefined)) {
+		gameOver = true;
+		winnerName.innerText = "Nobody wins!";
+		modal.style.display = "block";
 		updateScores();
-		console.log(winArr);
-	});
+		return;
+	}
 };
 
 const addClickHandler = (elem) => {
 	elem.addEventListener("click", () => {
-	  if (elem.innerText == "" && !gameOver) {
-		elem.innerText = activePlayer.marker;
-		gameBoard.gameArr[elem.id] = activePlayer.marker;
-		gameHandler();
-	  }
+		if (elem.innerText == "" && !gameOver) {
+			gameBoard.gameArr[elem.id] = activePlayer.marker;
+			elem.innerText = gameBoard.gameArr[elem.id]
+			gameHandler();
+		}
 	});
 };
 
@@ -170,7 +176,7 @@ const aiPlayer = () => {
 			emptyCells.push(i);
 		}
 	}
-	console.log(emptyCells);
+	// console.log(emptyCells);
 	
 	if (difficulty == "Easy") {
 		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
@@ -183,13 +189,11 @@ const aiPlayer = () => {
 };
 
 const winnerName = document.getElementById("winnerName");
-const modals = Array.from(document.getElementsByClassName("modal"));
-modals.forEach((element) => {
-	element.addEventListener("click", (event) => {
-		if (event.target.classList[0] == "modal") {
-			closeModals();
-		}
-	});
+const modal = document.getElementById("modal");
+modal.addEventListener("click", (event) => {
+	if (event.target.classList[0] == "modal") {
+		closeModals();
+	}
 });
 
 let activePlayer;
