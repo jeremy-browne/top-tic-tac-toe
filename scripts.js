@@ -199,14 +199,18 @@ modal.addEventListener("click", (event) => {
 let activePlayer;
 let gameOver = false;
 const aiCheckbox = document.getElementById("aiCheckbox");
+let useAI = aiCheckbox.checked;
 aiCheckbox.addEventListener("click", () => {
 	useAI = !useAI;
 	if (!useAI) {
 		player2.name = "Player 2";
 	}
+	if (useAI && activePlayer == player2) {
+		aiPlayer();
+	}
 	updateScores();
 })
-let useAI = aiCheckbox.checked;
+
 
 const player1 = player("Player 1", "X", 0);
 const player2 = player("Player 2", "O", 1);
