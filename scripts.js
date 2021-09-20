@@ -193,32 +193,31 @@ const min = (a, b) => {
 }
 
 const miniMax = (state, depth, maximizingPlayer) => {
-	console.log(depth, maximizingPlayer);
+	console.log(state);
+	// Attempt number 1000 at a minimax
 	if (depth == 0) {
 		return state[0];
 	}
 	if (maximizingPlayer) {
 		let maxEval = -Infinity;
-		for (let i = 0; i < state.length; i++) {
+		state.forEach(child => {
 			let eval = miniMax(state, depth - 1, false);
 			maxEval = max(maxEval, eval);
 			if (state.length > 1) {
-				state.splice(i, 1);
+				state.splice(state.indexOf(child), 1);
 			}
-			console.log(maxEval);
-			return maxEval;
-		}	
+		});
+		return maxEval;
 	} else {
 		let minEval = Infinity;
-		for (let i = 0; i < state.length; i++) {
+		state.forEach(child => {
 			let eval = miniMax(state, depth - 1, true);
 			minEval = min(minEval, eval);
 			if (state.length > 1) {
-				state.splice(i, 1);
+				state.splice(state.indexOf(child), 1);
 			}
-			console.log(minEval);
-			return minEval;
-		}	
+		});
+		return minEval;
 	}
 };
 
@@ -234,7 +233,7 @@ const aiPlayer = () => {
 	}
 
 	if (difficulty == "Impossible") {
-		targetCell = miniMax(emptyCells, 9, true);
+		targetCell = miniMax(emptyCells, 27, false);
 		console.log(targetCell);
 		cells[targetCell].click();
 	}
