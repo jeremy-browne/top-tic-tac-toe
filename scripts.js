@@ -166,18 +166,27 @@ const gameHandler = () => {
 	}
 };
 
-const aiPlayer = () => {
-	const difficulty = "Easy";
-
-	// TO DO: Highlight AI decision process
-	let cells = Array.from(document.getElementsByTagName("td"));
+const getEmpty = (cells) => {
+	
 	let emptyCells = [];
 	for (let i = 0; i < cells.length; i++) {
 		if (cells[i].innerText == "") {
 			emptyCells.push(i);
 		}
 	}
-	// console.log(emptyCells);
+
+	return emptyCells;
+}
+
+const miniMax = (emptyCells) => {
+	console.log(emptyCells);
+	return i;
+};
+
+const aiPlayer = () => {
+	const difficulty = "Easy";
+	let cells = Array.from(document.getElementsByTagName("td"));
+	let emptyCells = getEmpty(cells);
 	
 	if (difficulty == "Easy") {
 		let targetCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
@@ -206,7 +215,8 @@ aiCheckbox.addEventListener("click", () => {
 	if (!useAI) {
 		player2.name = "Player 2";
 	}
-	if (useAI && activePlayer == player2) {
+	if (useAI) {
+		player2.name = "Mr Robot";
 		aiPlayer();
 	}
 	updateScores();
